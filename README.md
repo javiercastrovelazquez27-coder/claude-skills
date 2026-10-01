@@ -50,3 +50,7 @@ activa. Para actualizar: `git -C ~/claude-skills pull`.
 
 `prompt-framework` está basado en el trabajo de **Erik Taveras**
 ([@eriktaveras](https://eriktaveras.dev)), de Taveras Solutions.
+
+## Licencia
+
+[MIT](./LICENSE).
