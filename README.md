@@ -1,54 +1,52 @@
 # claude-skills
 
-Colección personal de skills para Claude Code. Cada skill es un conjunto de instrucciones que Claude Code aplica automáticamente en contextos específicos.
+Skills para [Claude Code](https://code.claude.com), en español. Cada carpeta es una skill: un
+`SKILL.md` con cuándo se activa y qué hacer, más los scripts y referencias que necesite.
+Salen de trabajo real y se mantienen al día con lo que se va aprendiendo.
+
+## Skills
+
+| Skill | Para qué sirve |
+|---|---|
+| [informe-visual-pdf](./informe-visual-pdf/) | Informes en PDF con la marca del cliente: resúmenes ejecutivos, reportes para junta, one-pagers. HTML con gráficas SVG, impreso con Chrome headless y revisado página por página. Incluye un Word acompañante. |
+| [reporte-search-console](./reporte-search-console/) | Reporte PDF del desempeño de un sitio en Google a partir del export de Search Console. |
+| [aeo-rastreadores-ia](./aeo-rastreadores-ia/) | Auditar si ChatGPT, Gemini, Claude y Perplexity pueden rastrear y citar un sitio: robots.txt por bot, bloqueos de CDN/WAF, llms.txt. |
+| [mac-disk-reclaim](./mac-disk-reclaim/) | Diagnóstico de disco y rendimiento en macOS: cachés, `node_modules`, Docker, Xcode, CPU, RAM y procesos en segundo plano. |
+| [prompt-framework](./prompt-framework/) | Prompts estructurados para planear y construir proyectos: contexto, fases, restricciones, debugging y generación de `CLAUDE.md`. |
+| [nextjs16-app-router](./nextjs16-app-router/) | Cambios incompatibles y patrones correctos de Next.js 16 (App Router, route handlers, server actions). |
+| [expo54-rn81-newarch](./expo54-rn81-newarch/) | Compatibilidad de Expo SDK 54 + React Native 0.81 + New Architecture. |
+| [nestjs-sse-streaming](./nestjs-sse-streaming/) | Streaming SSE en NestJS 11 compatible con el UI Message Stream del Vercel AI SDK. |
+| [vercel-ai-sdk-v6-tools](./vercel-ai-sdk-v6-tools/) | Patrones del Vercel AI SDK v6: `tool()` con Zod, `streamText`, contexto multi-tenant y fallback de providers. |
+| [zod-contract](./zod-contract/) | Schemas Zod estrictos para tools de IA, validación de lo que devuelve el LLM y contratos compartidos. |
+
+Algunas nombran proyectos concretos en su descripción (en qué repos activarse). Cámbialos por
+los tuyos al instalarla.
 
 ## Instalación
 
-### Opción A — Instalar directamente
+Clona el repo y enlaza las skills que quieras en `~/.claude/skills/`:
 
 ```bash
-claude install-skill /ruta/a/claude-skills/prompt-framework
+git clone https://gitlab.com/JCastro-bit/claude-skills.git ~/claude-skills
+
+# Todas
+for s in ~/claude-skills/*/; do ln -sfn "$s" ~/.claude/skills/$(basename "$s"); done
+
+# O solo una
+ln -sfn ~/claude-skills/informe-visual-pdf ~/.claude/skills/informe-visual-pdf
 ```
 
-### Opción B — Clonar y usar desde el repo
+Claude Code lee la descripción de cada skill al iniciar y el resto solo cuando la tarea la
+activa. Para actualizar: `git -C ~/claude-skills pull`.
 
-```bash
-git clone https://github.com/JCastro-bit/claude-skills.git ~/.claude-skills
-claude install-skill ~/.claude-skills/prompt-framework
-```
+## Requisitos por skill
 
-### Opción C — Symlink desde dotfiles
-
-```bash
-ln -s /ruta/a/claude-skills ~/.claude/skills
-```
-
-## Skills disponibles
-
-| Skill | Descripción |
-|-------|-------------|
-| [prompt-framework](./prompt-framework/) | Framework de prompts estructurados para planear y construir proyectos |
-
-### prompt-framework
-
-Framework que Claude Code aplica automáticamente al ayudarte a planear y construir proyectos. Incluye 7 triggers con comportamientos prescriptivos:
-
-| Trigger | Qué hace |
-|---------|----------|
-| Proyecto sin contexto | Pregunta QUÉ, PARA QUIÉN, POR QUÉ antes de escribir código |
-| Feature sin estructura | Reformula en patrón RCF (Resultado -> Criterio -> Formato) |
-| Feedback vago | Bloquea rehacer y pide cambios enumerados |
-| Bug sin contexto | Pide los 4 datos estructurados para diagnosticar |
-| Crear CLAUDE.md | Guía sección por sección con template |
-| Cerrar sesión | Genera resumen técnico para retomar después |
-| Retomar sesión | Lee resumen, confirma estado, propone siguiente paso |
-
-Además aplica desarrollo en 5 fases (Planificación -> Fundación -> Construcción -> Integración -> Pulido) con checkpoints de aprobación entre cada fase.
-
-**Archivos:**
-- `SKILL.md` — Instrucciones principales con triggers y comportamientos
-- `references/claude-md-template.md` — Templates reutilizables (CLAUDE.md, restricciones, resumen de sesión)
+- **informe-visual-pdf:** Google Chrome y Poppler (`pdftoppm`, `pdffonts`); Node con `docx` para el Word.
+- **reporte-search-console:** Python 3 (`scripts/setup.sh` instala lo necesario).
+- **aeo-rastreadores-ia:** `curl` y Python 3.
+- **mac-disk-reclaim:** macOS. Los scripts piden confirmación antes de borrar.
 
 ## Créditos
 
-El framework `prompt-framework` está basado en el trabajo de **Erik Taveras** ([@eriktaveras](https://eriktaveras.dev)) de Taveras Solutions.
+`prompt-framework` está basado en el trabajo de **Erik Taveras**
+([@eriktaveras](https://eriktaveras.dev)), de Taveras Solutions.

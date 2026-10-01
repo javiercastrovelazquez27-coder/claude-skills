@@ -1,0 +1,90 @@
+/* ============================================================
+   informe-visual-pdf — hoja base (Chrome headless, A4 horizontal)
+   Cambia los tokens de :root por los de la marca del cliente y las
+   familias de h1/h2/.num/body por sus fuentes. Nada más.
+   ============================================================ */
+@page{size:297mm 210mm;margin:0}
+:root{
+  --brand:#0075A2;   /* color principal de la marca */
+  --brand-d:#0B3446; /* versión profunda: títulos y cifras grandes */
+  --crit:#DE3E41;    /* solo lo crítico (vencido, caída, alerta) */
+  --ink:#14242E; --mut:#5B6B75; --faint:#687782; /* faint >= 4.5:1 sobre blanco */
+  --rule:#DCE3E7; --wash:#F2F6F8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);font-size:10pt;line-height:1.5;
+  font-variant-numeric:tabular-nums;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+b{font-weight:700}
+.r{color:var(--crit)}
+
+/* Cada página es una hoja de tamaño fijo. overflow:hidden hace que un desborde se
+   vea como texto cortado en el PNG en vez de empujar una página extra. */
+.sheet{width:297mm;height:210mm;padding:15mm 18mm 16mm;position:relative;overflow:hidden;page-break-after:always}
+.sheet:last-child{page-break-after:auto}
+
+/* Display: fuente de la marca, sin tracking negativo en tamaños chicos, sin cifras tabulares */
+h1,h2,h3,.num,.lead,.statement{font-family:'Plus Jakarta Sans',sans-serif;text-wrap:balance}
+h2,h3,.lead,.statement{word-spacing:.06em}
+.num,.statement b,.cover h1{font-variant-numeric:normal}
+h2{font-size:10.5pt;font-weight:700;color:var(--brand-d);margin:0 0 2.5mm}
+h3{font-size:9.5pt;font-weight:700;color:var(--brand-d);margin:7mm 0 2mm}
+p{margin:0 0 3mm}
+footer{position:absolute;left:18mm;right:18mm;bottom:8mm;display:flex;justify-content:space-between;font-size:7.5pt;color:var(--faint)}
+footer .pn{font-weight:700;color:var(--brand)}
+
+/* ---------- portada ---------- */
+.cover .logo{height:17mm;display:block}
+.cover .motif{width:222mm;margin:4mm auto 0}
+.cover-foot{position:absolute;left:18mm;right:18mm;bottom:15mm;display:flex;justify-content:space-between;
+  align-items:flex-end;border-top:1pt solid var(--rule);padding-top:6mm}
+.cover h1{font-size:28pt;line-height:1.05;font-weight:800;color:var(--brand-d);margin:0 0 3mm;letter-spacing:-.025em}
+.cover-sub{font-size:11pt;color:var(--mut);max-width:125mm;margin:0}
+.cover-meta{font-size:10pt;text-align:right;margin:0;line-height:1.6}
+
+/* ---------- resumen: una frase grande con las cifras + dos columnas ---------- */
+.summary{display:flex;flex-direction:column}
+.statement{font-size:27pt;line-height:1.3;font-weight:500;letter-spacing:-.02em;max-width:245mm;margin:6mm 0 0}
+.statement b{font-weight:800;color:var(--brand)}
+.statement b.r{color:var(--crit)}
+.summary .cols2{margin-top:auto;margin-bottom:10mm}
+.cols2{display:grid;grid-template-columns:1fr 1fr;column-gap:14mm}
+.points{margin:0;padding:0;list-style:none;counter-reset:p}
+.points li{position:relative;padding:3mm 0 3mm 9mm;border-top:1pt solid var(--rule);color:var(--mut)}
+.points li b{color:var(--ink);display:block;font-family:'Plus Jakarta Sans';font-size:11pt;margin-bottom:.5mm;word-spacing:.06em}
+.points li::before{counter-increment:p;content:counter(p);position:absolute;left:0;top:3mm;
+  font-family:'Plus Jakarta Sans';font-weight:800;font-size:11pt;color:var(--brand)}
+table{border-collapse:collapse;width:100%}
+.todo th{text-align:left;vertical-align:top;width:24mm;padding:3mm 0;font-family:'Plus Jakarta Sans';
+  font-size:10.5pt;color:var(--brand);border-top:1pt solid var(--rule)}
+.todo td{padding:3mm 0;border-top:1pt solid var(--rule)}
+
+/* ---------- spread: columna de lectura + gráfica ---------- */
+.spread{display:grid;grid-template-columns:72mm 1fr;column-gap:14mm}
+.spread aside{padding-top:2mm;color:var(--mut)}  /* color en el contenedor: 'aside p' le ganaría a .num y .lead */
+.spread main{padding-top:3mm}
+.num{font-size:40pt;font-weight:800;color:var(--brand-d);letter-spacing:-.03em;line-height:1;margin:0 0 3mm}
+.num.r{color:var(--crit)}
+.lead{font-size:14pt;font-weight:500;line-height:1.3;margin:0 0 5mm;color:var(--ink)}
+
+/* ---------- toprow: cifra + frase en una fila, contenido a lo ancho ---------- */
+.toprow{display:grid;grid-template-columns:auto 1fr;column-gap:9mm;align-items:center;margin:0 0 6mm}
+.toprow .num{margin:0}
+.toprow .lead{max-width:150mm;margin:0}
+
+/* ---------- piezas ---------- */
+.legend{font-size:8.8pt;color:var(--mut);margin:0 0 2mm}
+.legend span{margin-right:6mm;white-space:nowrap}
+.legend i,.swatch{display:inline-block;width:8pt;height:8pt;border-radius:2pt;margin-right:1.8mm;vertical-align:-.5pt}
+.note{font-size:8pt;color:var(--faint);margin:2mm 0 0;line-height:1.45}
+.small{font-size:8.6pt;color:var(--mut);margin-top:2.5mm}
+.mini td{padding:1.6mm 0;border-top:1pt solid var(--rule);font-size:9.2pt;vertical-align:top}
+.mini tr:first-child td{border-top:0}
+.mini .n{text-align:right;padding-left:3mm;white-space:nowrap}
+.mini .p{color:var(--faint);width:12mm}
+.mini tr.t td{font-weight:700;border-top:1pt solid var(--ink)}
+.data th{text-align:left;font-size:7.8pt;font-weight:500;color:var(--faint);padding:0 3mm 2mm 0;border-bottom:1pt solid var(--ink)}
+.data td{padding:2.3mm 3mm 2.3mm 0;border-bottom:1pt solid var(--rule);font-size:9.8pt}
+.data .n{text-align:right}
+.data tr.hl td{background:var(--wash)}
+.data tr td.b{font-weight:700}

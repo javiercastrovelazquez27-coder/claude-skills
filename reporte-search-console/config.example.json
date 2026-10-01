@@ -1,0 +1,52 @@
+{
+  "export_dir": "~/Downloads/ejemplo.com.mx-Performance-on-Search-2026-09-11",
+  "output": "~/Downloads/Reporte-ejemplo.com.mx-2026-09.pdf",
+  "site": "ejemplo.com.mx",
+  "report_date": "2026-09-11",
+  "agency": "Médico Creativo",
+  "client": { "prepared_for": "la Dra. Nombre Apellido" },
+
+  "brand": {
+    "primary": "#0F1F4D",
+    "primary_deep": "#0A1747",
+    "accent": "#6A9BCD",
+    "surface": "#F3F5FD"
+  },
+  "fonts": { "display": "Funnel Display", "body": "Inter" },
+  "logo": "~/ruta/al/logo.png",
+  "cover_logo": "white",
+  "cover_logo_width": 62,
+
+  "brand_queries": ["apellido", "dra nombre", "doctora nombre"],
+  "brand_label": "su nombre (Apellido, Dra. Nombre)",
+  "topic_keywords": {
+    "rinoplastia": ["rinoplastia", "rhinoplasty", "nariz"],
+    "liposucción": ["lipo"]
+  },
+  "topics_title": "Búsquedas de procedimientos",
+  "blog_prefixes": ["/blog", "/en/blog"],
+  "locale_homes": ["/en/"],
+  "page_names": {
+    "/": "Página de inicio",
+    "/en/": "Página de inicio (inglés)",
+    "/blog": "Blog",
+    "/blog/rinoplastia-guia": "Guía: rinoplastia"
+  },
+
+  "summary_lead": null,
+  "highlights": null,
+  "growth_callout": null,
+  "pages_lead": null,
+
+  "improvements": {
+    "kicker": "MEJORAS REALIZADAS · SEPTIEMBRE 2026",
+    "title": "Un sitio más rápido y mejor entendido por Google",
+    "intro": "Qué se hizo y para qué, en lenguaje de paciente.",
+    "speed_text": "La página de inicio ahora descarga X% menos datos al abrirse.",
+    "weight_table": [["Carga inicial de la página de inicio", 1702000, 228000]],
+    "weight_note": "Medición: archivos del sitio antes y después de la actualización del …",
+    "bullets": ["<b>Título corto.</b> Explicación verificable en el código del sitio."]
+  },
+  "next_steps_lead": "Google suele tardar entre dos y cuatro semanas en reflejar cambios técnicos.",
+  "next_steps": ["<b>Paso.</b> Por qué importa."]
+}
