@@ -2,9 +2,8 @@
 name: zod-contract
 description: |
   Patrones estrictos de Zod para schemas de AI tools, validación de input del LLM,
-  y contratos compartidos. Activar al definir schemas Zod, especialmente en tools del
-  AI Assistant o cuando el contrato cruce repos.
-allowed-tools: Read, Grep, Glob
+  y contratos compartidos. Activar al definir schemas Zod, especialmente en tools de
+  un asistente de IA o cuando el contrato cruce repos.
 ---
 
 # Zod — contratos estrictos

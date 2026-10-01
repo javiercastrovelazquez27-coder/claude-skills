@@ -1,8 +1,12 @@
 # claude-skills
 
-Skills para [Claude Code](https://code.claude.com), en español. Cada carpeta es una skill: un
-`SKILL.md` con cuándo se activa y qué hacer, más los scripts y referencias que necesite.
-Salen de trabajo real y se mantienen al día con lo que se va aprendiendo.
+Skills para agentes de código, en español. Siguen el estándar abierto
+[Agent Skills](https://agentskills.io/specification), así que funcionan igual en Claude Code,
+OpenAI Codex, GitHub Copilot, Gemini CLI y cualquier agente que lea `SKILL.md`.
+
+Cada carpeta es una skill: un `SKILL.md` con cuándo se activa y qué hacer, más los scripts y
+referencias que necesite. Salen de trabajo real y se mantienen al día con lo que se va
+aprendiendo. Ninguna depende de herramientas de un agente en particular ni de otro proyecto.
 
 ## Skills
 
@@ -19,25 +23,34 @@ Salen de trabajo real y se mantienen al día con lo que se va aprendiendo.
 | [vercel-ai-sdk-v6-tools](./vercel-ai-sdk-v6-tools/) | Patrones del Vercel AI SDK v6: `tool()` con Zod, `streamText`, contexto multi-tenant y fallback de providers. |
 | [zod-contract](./zod-contract/) | Schemas Zod estrictos para tools de IA, validación de lo que devuelve el LLM y contratos compartidos. |
 
-Algunas nombran proyectos concretos en su descripción (en qué repos activarse). Cámbialos por
-los tuyos al instalarla.
-
 ## Instalación
 
-Clona el repo y enlaza las skills que quieras en `~/.claude/skills/`:
+Clona el repo y enlaza las skills en la carpeta que lee tu agente:
+
+| Agente | Carpeta del usuario | Carpeta del proyecto |
+|---|---|---|
+| Claude Code | `~/.claude/skills/` | `.claude/skills/` |
+| OpenAI Codex, Gemini CLI, GitHub Copilot y otros | `~/.agents/skills/` | `.agents/skills/` |
+| GitHub Copilot | `~/.copilot/skills/` | `.github/skills/` |
+| Gemini CLI | `~/.gemini/skills/` | `.gemini/skills/` |
 
 ```bash
 git clone https://gitlab.com/JCastro-bit/claude-skills.git ~/claude-skills
 
-# Todas
-for s in ~/claude-skills/*/; do ln -sfn "$s" ~/.claude/skills/$(basename "$s"); done
+# Todas, para tu agente (cambia DEST por la carpeta de la tabla)
+DEST=~/.agents/skills; mkdir -p "$DEST"
+for s in ~/claude-skills/*/; do ln -sfn "$s" "$DEST/$(basename "$s")"; done
 
 # O solo una
 ln -sfn ~/claude-skills/informe-visual-pdf ~/.claude/skills/informe-visual-pdf
 ```
 
-Claude Code lee la descripción de cada skill al iniciar y el resto solo cuando la tarea la
-activa. Para actualizar: `git -C ~/claude-skills pull`.
+`~/.agents/skills/` es la carpeta común: la leen Codex, Gemini CLI, Copilot y otros, así que
+con un solo enlace sirve para varios. Claude Code usa la suya (`~/.claude/skills/`).
+
+El agente lee el `name` y la `description` de cada skill al iniciar y el resto solo cuando la
+tarea la activa. Cuando un `SKILL.md` dice `<skill>`, se refiere a la carpeta de esa skill.
+Para actualizar: `git -C ~/claude-skills pull`.
 
 ## Requisitos por skill
 

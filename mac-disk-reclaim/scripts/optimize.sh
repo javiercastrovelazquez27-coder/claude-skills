@@ -30,7 +30,7 @@ for a in "$@"; do
 done
 
 # Procesos que NUNCA se tocan: matarlos cuelga la sesion o el sistema.
-PROTEGIDOS='^(kernel_task|launchd|WindowServer|loginwindow|SystemUIServer|Dock|Finder|coreaudiod|opendirectoryd|securityd|mds|mds_stores|Terminal|iTerm2|Warp|Ghostty|Alacritty|kitty|Claude|claude|node|ssh|sshd)$'
+PROTEGIDOS='^(kernel_task|launchd|WindowServer|loginwindow|SystemUIServer|Dock|Finder|coreaudiod|opendirectoryd|securityd|mds|mds_stores|Terminal|iTerm2|Warp|Ghostty|Alacritty|kitty|Claude|claude|codex|Codex|gemini|copilot|Code|Cursor|node|ssh|sshd)$'
 
 # Puerta unica: nada se mata sin pasar por aqui. Antes esta lista existia pero no se usaba.
 permitido(){

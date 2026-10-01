@@ -16,7 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from charts import bars, stacked, lines, legend, part_bar, money  # noqa: E402
 
-# Paleta: roles, no decoración. Valida los pares con el validador de dataviz.
+# Paleta: roles, no decoración. Revisa los pares con scripts/contraste.py.
 BRAND = "#0075A2"
 BRAND_D = "#0B3446"
 SECOND = "#E3A33B"   # segunda serie categórica (pasa CVD contra BRAND)

@@ -5,6 +5,8 @@ description: Auditar y configurar un sitio para que ChatGPT, Gemini, Claude y Pe
 
 # AEO técnico: rastreadores de IA
 
+`<skill>` es la carpeta de esta skill (donde está este `SKILL.md`).
+
 Cómo dejar un sitio legible para los asistentes de IA **sin confundir** tres cosas distintas:
 
 | Tipo | Para qué | Bots | ¿Respeta robots.txt? |
@@ -46,7 +48,7 @@ Detalle de cada bot (user-agent, rangos de IP, fuente): [references/bots.md](ref
 2. **robots.txt en producción**: `curl -sD - https://DOMINIO/robots.txt` → 200, `text/plain`,
    sin `Disallow` accidentales, `Sitemap:` declarado. Revisar también el `public/robots.txt` del repo.
 3. **Bots contra URLs clave (simulación)** (home, listado, detalle, artículo, sitemap, llms.txt):
-   `bash ~/.claude/skills/aeo-rastreadores-ia/scripts/auditar-bots.sh https://DOMINIO /ruta1 /ruta2`
+   `bash <skill>/scripts/auditar-bots.sh https://DOMINIO /ruta1 /ruta2`
    Si un bot da 429/403 y los demás 200: repetir con `--lento` (1 petición cada 6 s) para distinguir
    límite de ráfaga de regla por user-agent.
 4. **Página por página**: código HTTP, `<meta name="robots">`, `X-Robots-Tag`, `canonical` propio,
@@ -67,7 +69,7 @@ Probar con curl solo imita al bot. La prueba real es el log del servidor con la 
 1. Exportar el log de acceso (hPanel de Hostinger: CSV con
    `status,ipAddress,host,request,userAgent,countryCode,sizeBytes,durationSecs,timestamp`; otros
    hosts: adaptar `COLS` en el script).
-2. `python3 ~/.claude/skills/aeo-rastreadores-ia/scripts/verificar-bots-log.py log.csv --excluir-ip <tu IP>`
+2. `python3 <skill>/scripts/verificar-bots-log.py log.csv --excluir-ip <tu IP>`
    Descarga los rangos oficiales (OpenAI ×3, Anthropic, Perplexity ×2, Googlebot, Bingbot) y separa
    visitas **reales** de impostores/pruebas propias, con los códigos que recibió cada bot real.
 3. Averiguar la IP propia (`curl -s ifconfig.me`) para excluirla: tus pruebas aparecen con UA de bot.

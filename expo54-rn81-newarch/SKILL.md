@@ -2,16 +2,15 @@
 name: expo54-rn81-newarch
 description: |
   Compatibilidad y caveats de Expo SDK 54 + React Native 0.81 + New Architecture.
-  Activar al trabajar en stockwave-mobile, instalar deps, tocar nativo, Reanimated,
-  NativeWind, navegación, o código de streaming SSE en RN.
-allowed-tools: Read, Grep, Glob, Bash(npx expo-doctor)
+  Activar en proyectos con Expo 54 o React Native 0.81: al instalar dependencias, tocar
+  código nativo, Reanimated, NativeWind, navegación o streaming SSE en RN.
 ---
 
 # Expo 54 + RN 0.81 + New Architecture — reglas
 
-## Stack fijo (no cambiar sin discusión)
+## Stack de referencia (no cambiarlo sin hablarlo con el usuario)
 
-- Expo SDK 54 (última que permite Legacy Arch; usamos New Arch).
+- Expo SDK 54 (última que permite Legacy Arch; esta skill asume New Arch).
 - React Native 0.81.
 - **Reanimated v3** (NO v4 — NativeWind aún no lo soporta).
 - NativeWind 4.2.
@@ -25,7 +24,7 @@ allowed-tools: Read, Grep, Glob, Bash(npx expo-doctor)
 - Token storage: SIEMPRE `expo-secure-store`, NUNCA AsyncStorage.
 - `shadcn/ui` no corre en RN — alternativas: `react-native-reusables` o `gluestack-ui v3`.
 
-## Streaming SSE en RN para AI Assistant
+## Streaming SSE en RN para un chat con IA
 
 `@ai-sdk/react` `useChat` debería funcionar con el polyfill nativo de fetch en RN 0.81.
 Si falla streaming (no chunkea, llega toda la respuesta de golpe), **detente y pregunta**

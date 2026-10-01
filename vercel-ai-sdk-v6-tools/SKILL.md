@@ -5,10 +5,9 @@ description: |
   experimental_context para multi-tenant, fallback de providers. Activar al ver imports
   de `ai`, `@ai-sdk/google`, `@ai-sdk/groq`, `@ai-sdk/react`, archivos en `*/ai-assistant/*`,
   uso de `streamText`, `generateText`, `tool()`, `useChat`, `pipeUIMessageStreamToResponse`.
-allowed-tools: Read, Grep, Glob, mcp__context7__*
 ---
 
-# Vercel AI SDK v6 — patrones canónicos para Stockwave
+# Vercel AI SDK v6 — patrones canónicos
 
 Stack: `ai@^6`, `@ai-sdk/google@^2`, `@ai-sdk/groq@^2`, `@ai-sdk/react@^2`, `zod@^3.23`.
 
@@ -94,4 +93,5 @@ async streamChat(messages, user) {
 
 ## Cuando dudes
 
-Usá `mcp__context7__*` con la query `vercel/ai v6 <topic>` para traer docs actualizadas.
+Consulta la documentación actual del AI SDK v6. Si tu agente tiene una herramienta de
+documentación (por ejemplo Context7 por MCP), búscala con `vercel/ai v6 <tema>`.

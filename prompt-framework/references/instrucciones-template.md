@@ -1,6 +1,6 @@
 # Templates de referencia
 
-## Template: CLAUDE.md para proyectos
+## Template: archivo de instrucciones del proyecto (CLAUDE.md, AGENTS.md, GEMINI.md)
 
 ```markdown
 # Proyecto: [NOMBRE]

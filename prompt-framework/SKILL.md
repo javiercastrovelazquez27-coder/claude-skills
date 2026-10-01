@@ -1,17 +1,17 @@
 ---
 name: prompt-framework
-description: Framework de prompts estructurados para Claude Code. Aplica las 5 reglas (contexto, fases, restricciones, RCF, feedback), debugging estructurado, generación de CLAUDE.md y gestión de sesiones.
+description: Framework de prompts estructurados para agentes de código (Claude Code, Codex, GitHub Copilot, Gemini CLI). Aplica las 5 reglas (contexto, fases, restricciones, RCF, feedback), debugging estructurado, generación del archivo de instrucciones del proyecto (CLAUDE.md, AGENTS.md, GEMINI.md) y gestión de sesiones.
 ---
 
 # Skill: prompt-framework
 
-Framework de prompts para Claude Code. Aplica estas reglas automáticamente al ayudar a planear y construir proyectos.
+Framework de prompts para agentes de código. Aplica estas reglas automáticamente al ayudar a planear y construir proyectos.
 
 ---
 
 ## Triggers y comportamientos
 
-Cada trigger define CUÁNDO se activa la skill y QUÉ debe hacer Claude Code exactamente.
+Cada trigger define CUÁNDO se activa la skill y QUÉ debe hacer el agente exactamente.
 
 ### Trigger: Proyecto sin contexto
 
@@ -123,19 +123,22 @@ Si el usuario ya proporcionó el error completo y hay suficiente contexto para d
 
 ---
 
-### Trigger: Crear CLAUDE.md
+### Trigger: Crear el archivo de instrucciones del proyecto
 
-**Detectar cuando:** El usuario pide crear un CLAUDE.md o configurar un proyecto para Claude Code.
+**Detectar cuando:** El usuario pide crear el archivo de instrucciones del proyecto o configurar
+un proyecto para un agente. El nombre depende del agente: `CLAUDE.md` (Claude Code),
+`AGENTS.md` (Codex y otros), `GEMINI.md` (Gemini CLI), `.github/copilot-instructions.md`
+(GitHub Copilot). Si no está claro cuál usa, pregunta; `AGENTS.md` es el más compartido.
 
-**Respuesta obligatoria:** Usar el template de `references/claude-md-template.md` y preguntar sección por sección:
+**Respuesta obligatoria:** Usar el template de `references/instrucciones-template.md` y preguntar sección por sección:
 
 ```
-Voy a crear el CLAUDE.md para este proyecto. Necesito que completes:
+Voy a crear el archivo de instrucciones para este proyecto. Necesito que completes:
 
 1. **Nombre del proyecto:** [?]
 2. **Qué hace y para quién:** [una oración]
 3. **Stack:** [tecnologías]
-4. **Reglas obligatorias:** [qué NO debe hacer Claude, convenciones]
+4. **Reglas obligatorias:** [qué NO debe hacer el agente, convenciones]
 5. **Contexto del negocio:** [cliente, usuario final, problema]
 6. **Estado actual:** [qué está hecho, qué falta]
 7. **Variables de entorno:** [lista]
@@ -154,7 +157,7 @@ Si el proyecto ya tiene código, leer la estructura y pre-llenar las secciones q
 
 **Frases típicas:** "voy a cerrar", "hasta aquí por hoy", "guárdame el progreso", "resumen de sesión", "vamos a parar"
 
-**Respuesta obligatoria:** Generar resumen técnico usando el template de `references/claude-md-template.md` (sección Resumen de sesión):
+**Respuesta obligatoria:** Generar resumen técnico usando el template de `references/instrucciones-template.md` (sección Resumen de sesión):
 
 ```markdown
 # Resumen de sesión — [PROYECTO] — [FECHA]
@@ -270,5 +273,5 @@ Estas reglas aplican en TODO momento, no solo en triggers específicos:
 | Algo no funciona | Pedir: qué intenté, qué esperaba, qué pasó, error exacto |
 | Cerrar sesión | Generar resumen técnico estructurado |
 | Abrir sesión nueva | Leer resumen + confirmar estado + preguntar siguiente paso |
-| Crear CLAUDE.md | Usar template + preguntar sección por sección |
+| Crear archivo de instrucciones | Usar template + preguntar sección por sección |
 | Feedback vago | NO rehacer — pedir feedback específico enumerado |

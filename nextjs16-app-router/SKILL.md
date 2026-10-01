@@ -1,10 +1,9 @@
 ---
 name: nextjs16-app-router
 description: |
-  Breaking changes y patrones correctos para Next.js 16. Activar al trabajar en
-  frontend-acuarium o espresso-landing, en archivos app/, route handlers, server
-  actions, useChat de @ai-sdk/react, o cualquier uso de params/searchParams/cookies/headers.
-allowed-tools: Read, Grep, Glob, mcp__context7__*
+  Breaking changes y patrones correctos para Next.js 16. Activar en proyectos con Next.js 16:
+  archivos app/, route handlers, server actions, useChat de @ai-sdk/react, o cualquier uso
+  de params/searchParams/cookies/headers.
 ---
 
 # Next.js 16 — breaking changes clave
@@ -49,4 +48,5 @@ Si hay problemas: `next dev --no-turbopack`. React 19.2 requerido.
 
 ## Cuando dudes
 
-`mcp__context7__*` con query `vercel/next.js 16 <topic>`.
+Consulta la documentación actual de Next.js 16. Si tu agente tiene una herramienta de
+documentación (por ejemplo Context7 por MCP), búscala con `vercel/next.js 16 <tema>`.

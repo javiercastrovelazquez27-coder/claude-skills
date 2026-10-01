@@ -4,7 +4,6 @@ description: |
   Patrones de streaming SSE en NestJS 11 compatibles con Vercel AI SDK UI Message Stream.
   Activar al crear controllers con stream, endpoints /chat, handlers que usen Response,
   pipeUIMessageStreamToResponse, o cualquier endpoint que devuelva text/event-stream.
-allowed-tools: Read, Grep, Glob
 ---
 
 # NestJS 11 + SSE streaming con AI SDK v6
@@ -72,7 +71,7 @@ curl -N -H "Accept: text/event-stream" \
 ```
 
 Si la respuesta no chunkea: verificar nginx/Cloudflare con `proxy_buffering off` y
-`X-Accel-Buffering: no` (configurar también si está atrás de Dokploy).
+`X-Accel-Buffering: no` (configurarlo también si está detrás de un proxy como Traefik o Nginx).
 
 ## Rate limiting
 

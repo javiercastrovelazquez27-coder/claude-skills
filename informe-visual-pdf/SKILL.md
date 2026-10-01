@@ -7,7 +7,7 @@ description: |
   se pida un PDF, un informe, un reporte "para el dueño / para el jefe / para la junta", un
   resumen visual o para presentar, una versión ejecutiva o técnica de algo, o "lo mismo
   pero más técnico / más simple" de un PDF anterior, aunque no digan "PDF".
-allowed-tools: Bash, Read, Write, Edit, Grep, Glob, AskUserQuestion, Skill
+compatibility: Requiere Python 3, Google Chrome o Chromium y Poppler (pdftoppm, pdffonts). Node con el paquete docx solo para el Word acompañante.
 ---
 
 # Informe visual en PDF
@@ -25,8 +25,11 @@ cambio, gustaron: se conservan tal cual en `scripts/charts.py`.
 
 Sigue los pasos en orden. Los marcados ⛔ no se saltan.
 
-`<skill>` es el directorio base que muestra esta skill al cargarse; `<dataviz>`, el de la
-skill `dataviz` (cambia con cada versión de Claude Code: tómalo de su encabezado al cargarla).
+`<skill>` es la carpeta de esta skill, donde está este `SKILL.md`. Los comandos usan esa
+ruta para llegar a `scripts/` y `assets/`.
+
+Funciona con cualquier agente que lea skills (Claude Code, Codex, GitHub Copilot, Gemini
+CLI…). Donde dice "pregunta" o "mira la imagen", usa lo que tu agente tenga para eso.
 
 ### 1. Verifica las cifras ⛔
 
@@ -72,8 +75,9 @@ Sin marca identificable: pregunta. No inventes una.
 
 ### 3. Acuerda la dirección con el usuario ⛔
 
-Una pregunta con `AskUserQuestion`, dos o tres opciones con vista previa ASCII de la
-portada y de una página interior. Deja primero la recomendada:
+Una sola pregunta con dos o tres opciones y una vista previa ASCII de la portada y de una
+página interior de cada una (con la herramienta de preguntas de tu agente si la tiene; si
+no, en un mensaje y esperas la respuesta). Deja primero la recomendada:
 
 - **Marca + editorial (recomendada):** colores y fuentes del cliente, maquetado de informe
   anual. Cada página abre con una cifra grande y la gráfica ocupa el espacio. Portada con
@@ -96,18 +100,20 @@ El color codifica un rol y el mismo rol lleva el mismo color en todo el document
 | Crítico (vencido, caída, mes malo) | rojo de la marca, y en ningún otro uso |
 | Parte neutra (cartera, por vencer) | gris azulado |
 
-Carga la skill `dataviz` y corre su validador antes de usar cualquier par:
+Revisa el contraste de cada par antes de usarlo:
 
 ```bash
-node <dataviz>/scripts/validate_palette.js "#0075A2,#E3A33B" --mode light
+python3 <skill>/scripts/contraste.py "#0075A2,#E3A33B"
 ```
 
-Un WARN de contraste obliga a que cada barra lleve su valor escrito (charts.py ya lo hace).
+Un color de serie por debajo de 3:1 contra el fondo obliga a que cada barra lleve su valor
+escrito (charts.py ya lo hace). Dos series vecinas con menos de 1.5:1 entre sí necesitan
+etiquetas directas o textura, porque sin color no se distinguen.
 
-Si el par es **marca contra neutro** (antes y después, real y meta), no es una paleta
-categórica: los FAIL de banda de luminosidad y de croma no aplican. Lo que sí debe
-pasar es la separación CVD, el piso de visión normal y, con WARN de contraste, etiquetas
-visibles.
+Si tu agente tiene un validador de paletas con simulación de daltonismo (por ejemplo, la
+skill `dataviz` de Claude Code), úsalo además. Un par **marca contra neutro** (antes y
+después, real y meta) no es una paleta categórica: ahí no aplican sus reglas de banda de
+luminosidad ni de croma; sí la separación para daltónicos.
 
 ### 5. Estructura
 
@@ -129,7 +135,8 @@ rehaz la estructura.
 
 ### 6. Redacta ⛔
 
-Carga la skill `humanizer` y aplica `references/redaccion.md`. Lo mínimo: cifra y frase
+Aplica `references/redaccion.md` (si tu agente tiene una skill para quitar el tono de IA a
+un texto, como `humanizer`, pásala también). Lo mínimo: cifra y frase
 que la explica, frases cortas, sin metadatos (hora, zona horaria, nombre de la BD), sin
 repetir el titular en el cuerpo, nota de método de dos líneas como máximo.
 
@@ -159,7 +166,7 @@ gráficas: lo visual va en el PDF. Valídalo y revísalo renderizado como cualqu
 
 ### 8. Revisa lo que salió ⛔
 
-Abre **cada** PNG con Read. Los errores de maquetación no dan error: se ven. Busca:
+Mira **cada** PNG como imagen. Los errores de maquetación no dan error: se ven. Busca:
 
 - Página con media hoja vacía → sube `H` del viewBox de la gráfica (en charts.py cada
   gráfica toma `W`/`H`). Es la palanca principal. Después, el tamaño del texto.
@@ -172,15 +179,10 @@ Abre **cada** PNG con Read. Los errores de maquetación no dan error: se ven. Bu
   tabla ya identifican la serie.
 - Texto recortado al pie → el `overflow:hidden` lo esconde. Busca la última línea.
 
-Después corre el detector una sola vez:
-
-```bash
-~/.claude/skills/impeccable/scripts/impeccable detect --json informe.html
-```
-
-Corrige el contraste (texto gris ≥4.5:1: `#687782` sobre blanco pasa, `#8A98A1` no).
-Los avisos de `tight-leading` en textos SVG y de `overused-font` en la fuente de marca
-no aplican. Dos rondas de revisión como máximo; luego se entrega.
+Revisa el contraste del texto gris con `scripts/contraste.py`: debe dar ≥4.5:1
+(`#687782` sobre blanco pasa, `#8A98A1` no). Si tienes un detector de antipatrones de
+diseño (por ejemplo `impeccable detect --json informe.html`), córrelo una vez; sus avisos
+de `tight-leading` en textos SVG y de `overused-font` en la fuente de marca no aplican. Dos rondas de revisión como máximo; luego se entrega.
 
 ### 9. Entrega
 
@@ -200,6 +202,7 @@ alguien del equipo, para que el usuario decida si va a la junta.
 |---|---|
 | `scripts/charts.py` | Barras simples y apiladas, agrupadas, líneas, barra partida, barras horizontales con rango (`range_bars`), pares antes/después (`before_after`), leyenda. |
 | `scripts/build_pdf.sh` | Chrome headless → PDF, fuentes incrustadas y PNG por página. |
+| `scripts/contraste.py` | Contraste WCAG de cada color contra el fondo y entre series vecinas. |
 | `scripts/fetch_fonts.py` | Google Fonts → woff2 local y `fonts/fonts.css`. |
 | `assets/base.css` | Tokens, hojas, portada, resumen, spread, toprow, tablas. |
 | `assets/ejemplo.py` | Esqueleto de cuatro páginas con datos ficticios. |

@@ -7,7 +7,7 @@ description: |
   métricas de su web", "que vea el valor de su sitio", o al recibir una carpeta
   `<dominio>-Performance-on-Search-<fecha>`. Incluye portada con su marca, KPIs, crecimiento
   mes a mes, búsquedas, páginas, audiencia, mejoras realizadas y próximos pasos.
-allowed-tools: Bash, Read, Write, Edit, Grep, Glob
+compatibility: Requiere Python 3 (setup.sh crea un venv con reportlab y matplotlib) y acceso a internet para bajar fuentes de Google Fonts.
 ---
 
 # Reporte de Search Console → PDF para el cliente
@@ -20,7 +20,7 @@ usted, pensado para un cliente no técnico.
 
 1. **Entorno**, una vez por máquina. Devuelve el `python` del venv (`~/.cache/reporte-search-console/venv`):
    ```bash
-   PY=$(~/.claude/skills/reporte-search-console/scripts/setup.sh)
+   PY=$(bash <skill>/scripts/setup.sh)   # <skill> = carpeta de esta skill
    ```
 2. **Datos.** La carpeta del export trae `Gráfico.csv`, `Consultas.csv`, `Páginas.csv`,
    `Países.csv` y `Dispositivos.csv`, o sus equivalentes en inglés (`Chart.csv`…).
